@@ -1,4 +1,4 @@
-**Attention! ** This file is currently being written. Don’t follow instructions
+**Attention!** This file is currently being written. Don’t follow instructions
 without thinking on your own. Read the files before doing anything.
 
  
