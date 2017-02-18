@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# docker exec -u git gitlab cat /var/opt/gitlab/.ssh/authorized_keys
+cat /srv/gitlab/data/.ssh/authorized_keys
