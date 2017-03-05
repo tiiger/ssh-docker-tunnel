@@ -1,0 +1,25 @@
+apt install docker.io
+docker pull gitlab/gitlab-ce
+
+
+docker run -d -h git.tii.tools -p 14200:80 --name gitlab --restart always -v /srv/gitlab/config:/etc/gitlab -v /srv/gitlab/logs:/var/log/gitlab -v /srv/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce
+
+
+adduser --system --shell /bin/bash git
+adduser git docker
+
+chmod +x docker-tunnel.sh
+
+# Gitlab Shell
+mkdir -p /opt/gitlab/embedded/service/gitlab-shell/bin/
+ln -s $(pwd)/docker-tunnel.sh /opt/gitlab/embedded/service/gitlab-shell/bin/gitlab-shell
+
+cp gitlab_authorized_keys /root/.ssh/gitlab_authorized_keys
+chown root:root /root/.ssh/gitlab_authorized_keys
+chmod 755 /root/.ssh/gitlab_authorized_keys
+cat >> /etc/ssh/sshd_config << EOT
+
+Match User git 
+  AuthorizedKeysCommand /root/.ssh/gitlab_authorized_keys
+  AuthorizedKeysCommandUser root
+EOT
